@@ -68,10 +68,10 @@
  <button class="btn secondary" id="rulesMenu">📘 ルール・仕様・クレジット</button>
  <button class="btn secondary" id="friendsToggle">フレンド / 招待コード</button>
  <div id="friendsPanel" class="hidden">
-  <div class="sectionTitle">フレンドコード</div>
+  <div class="sectionTitle">フレンドコード（ローカルメモ機能）</div><div class="muted">この一覧はこのブラウザ内に保存するメモです。オンラインのフレンド追加・対戦機能ではありません。</div>
   <div class="row"><input id="friendCode" class="field" placeholder="フレンドのコード"><button id="addFriend" class="btn secondary">追加</button></div>
   <div id="friendList" class="muted" style="text-align:left;margin-top:8px"></div>
-  <button id="copyInvite" class="btn secondary">部屋コードをコピー</button>
+  <button id="copyInvite" class="btn secondary">自分のコードをコピー</button><div id="friendStatus" class="muted" role="status" style="text-align:left;margin-top:8px">自分のコード：読み込み中</div>
  </div>
  <div class="small">BOTモードはオフラインで遊べます。初回はネット接続中にページを開き、読み込みが完了するまでお待ちください。キャッシュ後は同じブラウザで再訪するとオフラインでも起動できます。オンライン対戦は現在対応中です。</div>
 </div></div>
@@ -142,12 +142,12 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 const $=id=>document.getElementById(id);
 const CHARS=[
- {id:'aev',name:'AEV',emoji:'⚔️',color:0x18b7c9,hp:100,speed:7,damage:22,range:28,skill:'エナジーダッシュ',desc:'前方へ高速ダッシュ。短時間ダメージ軽減。',super:'エナジーバースト',superDesc:'前方に強力な衝撃波。',cool:7},
+ {id:'aev',name:'AEV',emoji:'⚔️',color:0x18b7c9,hp:100,speed:7,damage:22,range:28,skill:'エナジーダッシュ',desc:'向いている方向へ約5移動し、体力を最大5回復。',super:'エナジーバースト',superDesc:'自分の周囲・半径16以内の敵に75ダメージ。',cool:7},
  {id:'volt',name:'VOLT',emoji:'⚡',color:0xf0c33c,hp:85,speed:9,damage:18,range:24,skill:'ライトニング',desc:'近くの敵へ電撃。移動速度も少し上昇。',super:'サンダーストーム',superDesc:'周囲の敵に連続ダメージ。',cool:6},
  {id:'medic',name:'MEDIC',emoji:'💚',color:0x55d88a,hp:115,speed:6,damage:17,range:25,skill:'リカバー',desc:'自分の体力を回復。',super:'ヒーリングフィールド',superDesc:'体力とシールドを大きく回復。',cool:9},
- {id:'nova',name:'NOVA',emoji:'🌌',color:0xa77aff,hp:90,speed:6.5,damage:20,range:30,skill:'プラズマボム',desc:'狙った位置に小さな範囲爆発。',super:'ノヴァインパクト',superDesc:'広範囲に大ダメージ。',cool:8}
+ {id:'nova',name:'NOVA',emoji:'🌌',color:0xa77aff,hp:90,speed:6.5,damage:20,range:30,skill:'プラズマボム',desc:'最も近い敵を中心に、半径5以内の敵へ45ダメージ。',super:'ノヴァインパクト',superDesc:'自分の周囲・半径20以内の敵に95ダメージ。',cool:8}
 ];
-let chosen=0,mode='bot',started=false,ended=false,paused=false,elapsed=0,timeLeft=180,zoneRadius=52,zoneTimer=0,fireHeld=false,sprinting=false,joy={x:0,y:0},yaw=0,pitch=0,mouseLocked=false,supabase=null,channel=null,connected=false,room='';let myId=(Math.random().toString(36).slice(2,8)).toUpperCase();const remotePlayers=new Map(),friends=JSON.parse(localStorage.getItem('aev_friends')||'[]');let lastBroadcast=0;
+let chosen=0,mode='bot',started=false,ended=false,paused=false,elapsed=0,timeLeft=180,zoneRadius=52,zoneTimer=0,fireHeld=false,sprinting=false,joy={x:0,y:0},yaw=0,pitch=0,mouseLocked=false,supabase=null,channel=null,connected=false,room='';let myId=localStorage.getItem('aev_my_id')||Math.random().toString(36).slice(2,8).toUpperCase();localStorage.setItem('aev_my_id',myId);const remotePlayers=new Map(),friends=JSON.parse(localStorage.getItem('aev_friends')||'[]');let lastBroadcast=0;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x8bd5ed);scene.fog=new THREE.Fog(0x8bd5ed,42,125);
 const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,220);
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;document.body.appendChild(renderer.domElement);
@@ -197,8 +197,8 @@ document.addEventListener('keydown',e=>{if(e.code==='Escape'&&$('rulesModal').cl
 $('friendsToggle').onclick=()=>$('friendsPanel').classList.toggle('hidden');
 function renderFriends(){$('friendList').textContent=friends.length?friends.map(f=>'• '+f).join('\n'):'まだフレンドコードがありません';}
 $('addFriend').onclick=()=>{const f=$('friendCode').value.trim().toUpperCase();if(f&&f!==myId&&!friends.includes(f)){friends.push(f);localStorage.setItem('aev_friends',JSON.stringify(friends));renderFriends();$('friendCode').value=''}};
-$('copyInvite').onclick=async()=>{const value=room||myId;try{await navigator.clipboard.writeText(value);$('onlineStatus').textContent='コードをコピーしました：'+value}catch{$('onlineStatus').textContent='招待コード：'+value}};
-renderFriends();
+$('copyInvite').onclick=async()=>{const value=myId;try{await navigator.clipboard.writeText(value);$('friendStatus').textContent='自分のコードをコピーしました：'+value}catch{$('friendStatus').textContent='自分のコード：'+value+'（端末の設定により自動コピーできませんでした）'}};
+renderFriends();$('friendStatus').textContent='自分のコード：'+myId+'（このブラウザ内のローカル用）';
 async function connectOnline(){const url=$('supabaseUrl').value.trim(),key=$('supabaseKey').value.trim();if(!url||!key){$('onlineStatus').textContent='URLと公開用キーを入力してください。';return false}try{if(channel)await channel.unsubscribe();supabase=createClient(url,key);await supabase.realtime.connect();connected=true;localStorage.setItem('aev_sb_url',url);localStorage.setItem('aev_sb_key',key);$('onlineStatus').textContent='Supabaseに接続しました。部屋を作成するかコードで参加してください。';return true}catch(e){connected=false;$('onlineStatus').textContent='接続できません：'+(e.message||'設定を確認してください');return false}}
 $('supabaseUrl').value=localStorage.getItem('aev_sb_url')||'';$('supabaseKey').value=localStorage.getItem('aev_sb_key')||'';
 $('connect').onclick=()=>{$('onlineStatus').textContent='オンライン対戦は現在対応中です。'};
