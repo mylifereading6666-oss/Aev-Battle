@@ -13,7 +13,19 @@
 #onlineStatus{font-size:12px;color:#b6d7e6;text-align:left;min-height:18px;margin-top:8px}
 @media(pointer:coarse){#mobile{display:block}#hint{bottom:4px;font-size:9px}#topcenter{top:6px}#stats{top:42px;width:145px;font-size:11px}#rightstats{top:6px;font-size:11px}}@media(min-width:700px){#stats{top:56px}}
 .soundToggle{position:fixed;right:12px;top:100px;z-index:15;pointer-events:auto;border:1px solid #8defff88;border-radius:10px;background:#081626eF;color:#fff;padding:8px 11px;font-weight:800;font-size:12px;box-shadow:0 3px 12px #0008}.soundToggle:active{transform:scale(.97)}
-@media(max-width:420px){.soundToggle{top:104px;right:8px;padding:7px 9px;font-size:11px}}
+.rulesToggle{position:fixed;right:12px;top:148px;z-index:15;pointer-events:auto;border:1px solid #8defff88;border-radius:10px;background:#081626eF;color:#fff;padding:8px 11px;font-weight:800;font-size:12px;box-shadow:0 3px 12px #0008}
+#rulesModal{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:12px;background:#020813e8}
+#rulesModal.open{display:flex}
+.rulesCard{width:min(760px,100%);max-height:94dvh;overflow:auto;background:#0b1a2b;border:1px solid #54e6ff88;border-radius:18px;padding:18px;color:#f4fbff;box-shadow:0 20px 70px #000b}
+.rulesCard h2{margin:0 0 10px;color:var(--cyan);font-size:24px}
+.rulesCard h3{margin:18px 0 7px;color:#7de8ff;font-size:16px}
+.rulesCard p,.rulesCard li{font-size:13px;line-height:1.65;color:#d2e5f1}
+.rulesCard ul{padding-left:20px}
+.rulesCard table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0 14px}
+.rulesCard th,.rulesCard td{border:1px solid #36566c;padding:7px;text-align:left;vertical-align:top}
+.rulesCard th{background:#143149;color:#9defff}
+.rulesClose{position:sticky;bottom:0;background:#0b1a2b;padding-top:8px}
+@media(max-width:420px){.soundToggle{top:104px;right:8px;padding:7px 9px;font-size:11px}.rulesToggle{top:146px;right:8px;padding:7px 9px;font-size:11px}.rulesCard{padding:14px}.rulesCard h2{font-size:21px}}
 #onlinePanel input,#onlinePanel .row,#onlinePanel .small{display:none}#onlineMode:disabled{opacity:.7;cursor:default}
 </style>
 </head>
@@ -30,6 +42,7 @@
  <div id="rightstats" class="panel">💎 <b id="gems">0</b> / 10<br><span id="zone">アリーナに備えろ</span><br>👥 <b id="players">1</b></div>
  <div id="message"></div>
  <button id="soundToggle" class="soundToggle" type="button" aria-pressed="true">🔊 音 ON</button>
+ <button id="rulesHud" class="rulesToggle" type="button">📘 ルール・仕様</button>
  <div id="hint">WASD移動 · マウスで狙う · クリック通常攻撃 · E固有スキル · Q必殺技</div>
 </div>
 <div id="mobile"><div class="stick" id="stick"><div class="nub" id="nub"></div></div><button class="mobileBtn fire" id="fire">攻撃</button><button class="mobileBtn skill" id="skillBtn">SKILL</button><button class="mobileBtn super" id="superBtn">SUPER</button></div>
@@ -52,6 +65,7 @@
  </div>
  <div class="sectionTitle">キャラクターの能力</div><div id="selectedInfo" class="muted"></div>
  <button class="btn" id="play">戦闘開始</button>
+ <button class="btn secondary" id="rulesMenu">📘 ルール・仕様・クレジット</button>
  <button class="btn secondary" id="friendsToggle">フレンド / 招待コード</button>
  <div id="friendsPanel" class="hidden">
   <div class="sectionTitle">フレンドコード</div>
@@ -61,6 +75,69 @@
  </div>
  <div class="small">BOTモードはオフラインで遊べます。初回はネット接続中にページを開き、読み込みが完了するまでお待ちください。キャッシュ後は同じブラウザで再訪するとオフラインでも起動できます。オンライン対戦は現在対応中です。</div>
 </div></div>
+<div id="rulesModal" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+ <div class="rulesCard">
+  <h2 id="rulesTitle">📘 AEV BATTLE — ルール・仕様</h2>
+  <p>このページでは、BOTバトルのルール、操作方法、キャラクター能力、スキル、必殺技、クレジット、ライセンスを確認できます。オンライン対戦は現在対応中です。</p>
+  <h3>1. ゲームの目的・勝利条件</h3>
+  <ul>
+   <li><b>ジェム10個を集める：</b>アリーナのジェムや、敵を倒したときに出現するジェムを拾うと勝利です。</li>
+   <li><b>敵BOTを8体倒す：</b>敵を8体撃破すると勝利です。</li>
+   <li><b>制限時間：</b>制限時間は3分です。時間切れ時に撃破数が4体以上、またはジェムが5個以上なら勝利、それ以外は敗北です。</li>
+   <li><b>敗北：</b>体力が0になると敗北です。</li>
+   <li><b>アリーナの外側：</b>安全エリアの外にいると継続してダメージを受けます。リングが縮むので、内側へ戻ってください。</li>
+  </ul>
+  <h3>2. 操作方法</h3>
+  <table><thead><tr><th>操作</th><th>PC</th><th>スマートフォン・タブレット</th></tr></thead><tbody>
+   <tr><td>移動</td><td>W / A / S / D（矢印キーも可）</td><td>左下のスティック</td></tr>
+   <tr><td>ダッシュ</td><td>Shiftを押しながら移動</td><td>キャラクター固有スキルなどを利用</td></tr>
+   <tr><td>向きを変える</td><td>マウスで視点を操作</td><td>画面右側をドラッグ</td></tr>
+   <tr><td>通常攻撃</td><td>マウス左クリック / Space</td><td>「攻撃」ボタン</td></tr>
+   <tr><td>固有スキル</td><td>E</td><td>SKILL</td></tr>
+   <tr><td>必殺技</td><td>Q</td><td>SUPER</td></tr>
+  </tbody></table>
+  <h3>3. キャラクター能力</h3>
+  <table><thead><tr><th>キャラクター</th><th>基本能力</th><th>固有スキル（効果・再使用待ち時間）</th><th>必殺技（効果）</th></tr></thead><tbody>
+   <tr><td><b>⚔️ AEV</b></td><td>体力100 / 速度7 / 攻撃22 / 射程28</td><td><b>エナジーダッシュ</b>：向いている方向へ約5ユニット移動し、体力を最大5回復。再使用まで7秒。</td><td><b>エナジーバースト</b>：自分を中心とする半径16以内の敵に75ダメージ。必殺ゲージ100%で使用。</td></tr>
+   <tr><td><b>⚡ VOLT</b></td><td>体力85 / 速度9 / 攻撃18 / 射程24</td><td><b>ライトニング</b>：12以内に敵がいれば最も近い敵に45ダメージを与えて前進。敵がいなければ向いている方向へ約3ユニット移動。効果中は短時間移動速度が上昇。再使用まで6秒。</td><td><b>サンダーストーム</b>：自分を中心とする半径11以内の敵に65ダメージ。必殺ゲージ100%で使用。</td></tr>
+   <tr><td><b>💚 MEDIC</b></td><td>体力115 / 速度6 / 攻撃17 / 射程25</td><td><b>リカバー</b>：体力を最大32回復し、シールドを最大8回復（上限は体力115・シールド50）。再使用まで9秒。</td><td><b>ヒーリングフィールド</b>：体力を最大55、シールドを最大35回復（それぞれの上限まで）。必殺ゲージ100%で使用。</td></tr>
+   <tr><td><b>🌌 NOVA</b></td><td>体力90 / 速度6.5 / 攻撃20 / 射程30</td><td><b>プラズマボム</b>：射程25以内の最も近い敵を中心に、半径5以内の敵それぞれに45ダメージ。対象がいなければ発動してもダメージなし。再使用まで8秒。</td><td><b>ノヴァインパクト</b>：自分を中心とする半径20以内の敵に95ダメージ。必殺ゲージ100%で使用。</td></tr>
+  </tbody></table>
+  <h3>4. 攻撃・ゲージ・防御の仕様</h3>
+  <ul>
+   <li><b>通常攻撃：</b>攻撃可能な射程内の最も近い敵を狙い、キャラクターの攻撃力に応じたダメージを与えます。攻撃間隔は約0.34秒です。射程内に敵がいない場合も攻撃操作とゲージ加算は行われます。</li>
+   <li><b>必殺ゲージ：</b>通常攻撃1回につき8%、敵撃破1体につき12%、ジェム1個につき5%増加します。最大100%で、必殺技を使うと0%に戻ります。</li>
+   <li><b>シールド：</b>受けるダメージは、まずシールドから減少し、シールドがなくなると体力が減少します。</li>
+   <li><b>敵BOT：</b>敵はプレイヤーへ近づき、一定距離から赤い飛び道具を撃ちます。飛び道具を避け、障害物を使って距離を調整してください。</li>
+   <li><b>ジェム：</b>初期配置のジェムに加え、敵を倒すとその位置にジェムが出現します。拾うと必殺ゲージも5%増加します。</li>
+   <li><b>音：</b>画面右上付近の「音 ON / 音 OFF」ボタンで効果音を切り替えられます。</li>
+  </ul>
+  <h3>5. オフライン・セーブ情報</h3>
+  <ul>
+   <li>初回はインターネット接続中にページを開き、Three.jsなどの必要ファイルを読み込んでください。キャッシュが正常に作成されれば、同じ端末・ブラウザでオフライン起動できる場合があります。</li>
+   <li>現在、戦績や進行状況を保存するセーブ機能はありません。フレンドコード一覧は同じブラウザのローカル保存であり、オンラインのフレンド機能ではありません。</li>
+   <li>ゲーム内の数値・挙動は今後の更新で変更される場合があります。</li>
+  </ul>
+  <h3>6. オンライン対戦</h3>
+  <p>オンライン対戦は現在対応中です。現在プレイできるモードはBOTバトルです。オンラインのルーム作成、接続、他プレイヤーとの対戦は利用できません。</p>
+  <h3>7. クレジット</h3>
+  <ul>
+   <li><b>作品名：</b>Aev Battle</li>
+   <li><b>制作・プロジェクト表記：</b>Aev0rnJP Project</li>
+   <li><b>リポジトリ管理：</b>mylifereading6666-oss — <a href="https://github.com/mylifereading6666-oss/Aev-Battle" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+   <li><b>制作支援：</b>開発・説明文の一部でAI（ChatGPT）の支援を利用。</li>
+   <li><b>公開：</b>GitHub Pages</li>
+  </ul>
+  <h3>8. 著作権・ライセンス</h3>
+  <p>Copyright © 2026 Aev0rnJP Project. All rights reserved.</p>
+  <p>本作のオリジナルのコード、画面構成、文章、キャラクター設定等は、別途明記されたものを除き、権利者に権利が留保されています。リポジトリの公開は、コードや素材の自由な複製・改変・再配布・商用利用を許可するものではありません。許可なく再配布・転載・商用利用しないでください。</p>
+  <p>3D描画にはThree.js 0.160.0を使用しています。Three.jsは独立したオープンソースプロジェクトであり、そのライセンスは同プロジェクトの条件に従います。詳細：<a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">Three.js公式リポジトリとライセンス</a>。</p>
+  <p>本作はEpic Games、Fortnite、または他社の公式製品ではなく、公式な承認・提携を示すものではありません。外部ライブラリや各商標は、それぞれの権利者に帰属します。本リポジトリには現時点でプロジェクト全体を対象とするオープンソースライセンスを設定していません。</p>
+  <h3>9. 問い合わせ・不具合報告</h3>
+  <p>問題を報告する場合は、使用端末・ブラウザ・発生手順を添えて<a href="https://github.com/mylifereading6666-oss/Aev-Battle/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>へ投稿してください。</p>
+  <div class="rulesClose"><button id="closeRules" class="btn">閉じる</button></div>
+ </div>
+</div>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 const $=id=>document.getElementById(id);
@@ -70,7 +147,7 @@ const CHARS=[
  {id:'medic',name:'MEDIC',emoji:'💚',color:0x55d88a,hp:115,speed:6,damage:17,range:25,skill:'リカバー',desc:'自分の体力を回復。',super:'ヒーリングフィールド',superDesc:'体力とシールドを大きく回復。',cool:9},
  {id:'nova',name:'NOVA',emoji:'🌌',color:0xa77aff,hp:90,speed:6.5,damage:20,range:30,skill:'プラズマボム',desc:'狙った位置に小さな範囲爆発。',super:'ノヴァインパクト',superDesc:'広範囲に大ダメージ。',cool:8}
 ];
-let chosen=0,mode='bot',started=false,ended=false,elapsed=0,timeLeft=180,zoneRadius=52,zoneTimer=0,fireHeld=false,sprinting=false,joy={x:0,y:0},yaw=0,pitch=0,mouseLocked=false,supabase=null,channel=null,connected=false,room='';let myId=(Math.random().toString(36).slice(2,8)).toUpperCase();const remotePlayers=new Map(),friends=JSON.parse(localStorage.getItem('aev_friends')||'[]');let lastBroadcast=0;
+let chosen=0,mode='bot',started=false,ended=false,paused=false,elapsed=0,timeLeft=180,zoneRadius=52,zoneTimer=0,fireHeld=false,sprinting=false,joy={x:0,y:0},yaw=0,pitch=0,mouseLocked=false,supabase=null,channel=null,connected=false,room='';let myId=(Math.random().toString(36).slice(2,8)).toUpperCase();const remotePlayers=new Map(),friends=JSON.parse(localStorage.getItem('aev_friends')||'[]');let lastBroadcast=0;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x8bd5ed);scene.fog=new THREE.Fog(0x8bd5ed,42,125);
 const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,220);
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;document.body.appendChild(renderer.domElement);
@@ -111,6 +188,12 @@ function useSuper(){if(!started||ended||player.super<100)return;playSfx('super')
 function hitEnemy(e){if(e.hp<=0&&e.alive){e.alive=false;const p=e.parts.root.position.clone();scene.remove(e.parts.root);player.kills++;player.super=Math.min(100,player.super+12);spawnGem(p.x,p.z);updateHud();if(player.kills>=8)finish(true,'敵を8体撃破！')}}
 function setMode(next){mode='bot';$('botMode').classList.add('active');$('onlineMode').classList.remove('active');$('onlinePanel').classList.toggle('hidden',next!=='online');}
 $('botMode').onclick=()=>setMode('bot');$('onlineMode').onclick=()=>{$('onlinePanel').classList.remove('hidden');$('onlineStatus').textContent='オンライン対戦は現在対応中です。オフラインのBOTバトルをお楽しみください。'};
+let rulesWasPlaying=false;
+function openRules(){rulesWasPlaying=started&&!ended;paused=rulesWasPlaying;$('rulesModal').classList.add('open');$('rulesModal').setAttribute('aria-hidden','false');$('closeRules').focus()}
+function closeRules(){ $('rulesModal').classList.remove('open');$('rulesModal').setAttribute('aria-hidden','true');paused=false}
+$('rulesMenu').onclick=openRules;$('rulesHud').onclick=openRules;$('closeRules').onclick=closeRules;
+$('rulesModal').addEventListener('click',e=>{if(e.target===$('rulesModal'))closeRules()});
+document.addEventListener('keydown',e=>{if(e.code==='Escape'&&$('rulesModal').classList.contains('open'))closeRules()});
 $('friendsToggle').onclick=()=>$('friendsPanel').classList.toggle('hidden');
 function renderFriends(){$('friendList').textContent=friends.length?friends.map(f=>'• '+f).join('\n'):'まだフレンドコードがありません';}
 $('addFriend').onclick=()=>{const f=$('friendCode').value.trim().toUpperCase();if(f&&f!==myId&&!friends.includes(f)){friends.push(f);localStorage.setItem('aev_friends',JSON.stringify(friends));renderFriends();$('friendCode').value=''}};
@@ -134,7 +217,7 @@ $('fire').addEventListener('pointerdown',e=>{e.preventDefault();fireHeld=true;ba
 const stick=$('stick'),nub=$('nub');let stickId=null;stick.addEventListener('pointerdown',e=>{e.preventDefault();stickId=e.pointerId;stick.setPointerCapture(e.pointerId);moveStick(e)});stick.addEventListener('pointermove',e=>{if(e.pointerId===stickId)moveStick(e)});function moveStick(e){const r=stick.getBoundingClientRect();let dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),len=Math.hypot(dx,dy),max=35;if(len>max){dx=dx/len*max;dy=dy/len*max}joy.x=dx/max;joy.y=dy/max;nub.style.transform='translate('+dx+'px,'+dy+'px)'}function resetStick(){stickId=null;joy.x=joy.y=0;nub.style.transform='translate(0,0)'}stick.addEventListener('pointerup',resetStick);stick.addEventListener('pointercancel',resetStick);
 let lookPointer=null,lastX=0,lastY=0;renderer.domElement.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'&&started&&e.clientX>innerWidth*.42){lookPointer=e.pointerId;lastX=e.clientX;lastY=e.clientY}});renderer.domElement.addEventListener('pointermove',e=>{if(e.pointerId===lookPointer){yaw-=(e.clientX-lastX)*.008;pitch=Math.max(-.45,Math.min(.25,pitch-(e.clientY-lastY)*.006));lastX=e.clientX;lastY=e.clientY}});renderer.domElement.addEventListener('pointerup',e=>{if(e.pointerId===lookPointer)lookPointer=null});
 function blocked(x,z){if(Math.hypot(x,z)>54)return true;for(const o of obstacles)if(Math.abs(x-o.x)<o.rx&&Math.abs(z-o.z)<o.rz)return true;return false}
-function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05);if(started&&!ended){elapsed+=dt;timeLeft=Math.max(0,180-elapsed);zoneTimer+=dt;player.skillCooldown=Math.max(0,player.skillCooldown-dt);player.attackCooldown=Math.max(0,player.attackCooldown-dt);player.skillBoost=Math.max(0,player.skillBoost-dt);const forward=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0)-joy.y,side=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0)+joy.x;const c=CHARS[chosen],speed=(sprinting?c.speed*1.35:c.speed)*(player.skillBoost>0&&c.id==='volt'?1.25:1);const dx=(Math.sin(yaw)*forward+Math.cos(yaw)*side)*speed*dt,dz=(-Math.cos(yaw)*forward+Math.sin(yaw)*side)*speed*dt;const nx=playerRoot.position.x+dx,nz=playerRoot.position.z+dz;if(!blocked(nx,playerRoot.position.z))playerRoot.position.x=nx;if(!blocked(playerRoot.position.x,nz))playerRoot.position.z=nz;playerRoot.rotation.y=yaw;playerParts.phase+=dt*(Math.abs(forward)+Math.abs(side)>0.1?11:2);const moving=Math.abs(forward)+Math.abs(side)>.1;playerParts.legL.rotation.x=moving?Math.sin(playerParts.phase)*.65:0;playerParts.legR.rotation.x=moving?-Math.sin(playerParts.phase)*.65:0;playerParts.armL.rotation.x=moving?-Math.sin(playerParts.phase)*.35:0;playerParts.armR.rotation.x=moving?Math.sin(playerParts.phase)*.35:0;playerParts.torso.position.y=1.15+(moving?Math.abs(Math.sin(playerParts.phase))*0.07:0);
+function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05);if(started&&!ended&&!paused){elapsed+=dt;timeLeft=Math.max(0,180-elapsed);zoneTimer+=dt;player.skillCooldown=Math.max(0,player.skillCooldown-dt);player.attackCooldown=Math.max(0,player.attackCooldown-dt);player.skillBoost=Math.max(0,player.skillBoost-dt);const forward=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0)-joy.y,side=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0)+joy.x;const c=CHARS[chosen],speed=(sprinting?c.speed*1.35:c.speed)*(player.skillBoost>0&&c.id==='volt'?1.25:1);const dx=(Math.sin(yaw)*forward+Math.cos(yaw)*side)*speed*dt,dz=(-Math.cos(yaw)*forward+Math.sin(yaw)*side)*speed*dt;const nx=playerRoot.position.x+dx,nz=playerRoot.position.z+dz;if(!blocked(nx,playerRoot.position.z))playerRoot.position.x=nx;if(!blocked(playerRoot.position.x,nz))playerRoot.position.z=nz;playerRoot.rotation.y=yaw;playerParts.phase+=dt*(Math.abs(forward)+Math.abs(side)>0.1?11:2);const moving=Math.abs(forward)+Math.abs(side)>.1;playerParts.legL.rotation.x=moving?Math.sin(playerParts.phase)*.65:0;playerParts.legR.rotation.x=moving?-Math.sin(playerParts.phase)*.65:0;playerParts.armL.rotation.x=moving?-Math.sin(playerParts.phase)*.35:0;playerParts.armR.rotation.x=moving?Math.sin(playerParts.phase)*.35:0;playerParts.torso.position.y=1.15+(moving?Math.abs(Math.sin(playerParts.phase))*0.07:0);
  if(fireHeld&&Math.floor(elapsed*3)!==Math.floor((elapsed-dt)*3))basicAttack();
  for(const e of enemies){if(!e.alive)continue;const p=e.parts.root.position,to=playerRoot.position.clone().sub(p),dist=to.length();if(dist>4){to.normalize();const step=to.multiplyScalar((dist>20?2.4:1.3)*dt);const ex=p.x+step.x,ez=p.z+step.z;if(!blocked(ex,ez)){p.x=ex;p.z=ez}}e.parts.root.rotation.y=Math.atan2(playerRoot.position.x-p.x,playerRoot.position.z-p.z);e.parts.phase+=dt*8;e.parts.legL.rotation.x=Math.sin(e.parts.phase)*.5;e.parts.legR.rotation.x=-Math.sin(e.parts.phase)*.5;e.shot-=dt;if(dist<24&&e.shot<=0){e.shot=1.4+Math.random()*1.5;if(Math.random()<.72){const from=p.clone().add(new THREE.Vector3(0,1.3,0));const target=playerRoot.position.clone().add(new THREE.Vector3(0,1.05,0));spawnProjectile(from,target,5+Math.random()*4,'enemy',0xff4038);playSfx('enemy')}}}
  for(let i=projectiles.length-1;i>=0;i--){const p=projectiles[i],delta=p.to.clone().sub(p.mesh.position),d=delta.length(),step=p.speed*dt;p.life-=dt;let remove=false;if(p.owner==='enemy'){const playerTarget=playerRoot.position.clone().add(new THREE.Vector3(0,1.05,0));if(p.mesh.position.distanceTo(playerTarget)<1.05){damagePlayer(p.damage);playSfx('hit');remove=true}else if(d<=step||p.life<=0){remove=true}else{p.mesh.position.addScaledVector(delta.normalize(),step);if(p.glow)p.glow.position.copy(p.mesh.position);if(p.mesh.position.distanceTo(playerRoot.position.clone().add(new THREE.Vector3(0,1.05,0)))<1.05){damagePlayer(p.damage);playSfx('hit');remove=true}}}else if(d<=step||p.life<=0){const target=enemies.find(e=>e.alive&&e.parts.root.position.distanceTo(p.to)<2.5);if(target){target.hp-=p.damage;hitEnemy(target)}remove=true}else p.mesh.position.addScaledVector(delta.normalize(),step);if(remove){scene.remove(p.mesh);if(p.glow)scene.remove(p.glow);p.mesh.geometry.dispose();p.mesh.material.dispose();if(p.glow){p.glow.geometry.dispose();p.glow.material.dispose()}projectiles.splice(i,1)}}
