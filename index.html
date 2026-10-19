@@ -159,7 +159,7 @@ const beach=new THREE.Mesh(new THREE.CylinderGeometry(60,64,1.1,64),mat(0xd9c58a
 const water=new THREE.Mesh(new THREE.PlaneGeometry(500,500),new THREE.MeshStandardMaterial({color:0x2589bb,roughness:.35}));water.rotation.x=-Math.PI/2;water.position.y=-2.2;scene.add(water);
 function box(x,y,z,sx,sy,sz,material,collide=true){const o=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),material);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;scene.add(o);if(collide)obstacles.push({x,z,rx:sx/2+.6,rz:sz/2+.6});return o}
 const wallMat=mat(0x344b61,.72),wallTrim=mat(0x63dff0,.5);const wallH=8,wallT=2,wallEdge=50;box(0,wallH/2,-wallEdge,100,wallH,wallT,wallMat,false);box(0,wallH/2,wallEdge,100,wallH,wallT,wallMat,false);box(-wallEdge,wallH/2,0,wallT,wallH,100,wallMat,false);box(wallEdge,wallH/2,0,wallT,wallH,100,wallMat,false);for(let p=-40;p<=40;p+=10){box(p,wallH+.05,-wallEdge,1,.18,wallT+.2,wallTrim,false);box(p,wallH+.05,wallEdge,1,.18,wallT+.2,wallTrim,false);box(-wallEdge,wallH+.05,p,wallT+.2,.18,1,wallTrim,false);box(wallEdge,wallH+.05,p,wallT+.2,.18,1,wallTrim,false)}
-function tree(x,z,s=1){const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.2*s,.3*s,1.8*s,7),mat(0x80502d));trunk.position.set(x,.9*s,z);scene.add(trunk);for(let i=0;i<3;i++){const c=new THREE.Mesh(new THREE.ConeGeometry((1.1-i*.16)*s,1.7*s,7),mat(i%2?0x39945b:0x217b52));c.position.set(x,(2+i*.52)*s,z);c.castShadow=true;scene.add(c)}obstacles.push({x,z,rx:.8*s,rz:.8*s})}
+function tree(x,z,s=1){const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.2*s,.3*s,1.8*s,7),mat(0x80502d));trunk.position.set(x,.9*s,z);scene.add(trunk);for(let i=0;i<3;i++){const c=new THREE.Mesh(new THREE.ConeGeometry((1.1-i*.16)*s,1.7*s,7),mat(i%2?0x39945b:0x217b52));c.position.set(x,(2+i*.52)*s,z);c.castShadow=true;scene.add(c)}obstacles.push({x,z,rx:1.25*s,rz:1.25*s})}
 function rock(x,z,s=1){const r=new THREE.Mesh(new THREE.DodecahedronGeometry(s,0),mat(0x71828b));r.position.set(x,s*.4,z);r.scale.y=.7;r.castShadow=true;scene.add(r);obstacles.push({x,z,rx:s+.5,rz:s+.5})}
 function obstacleSpotClear(x,z,rx,rz){
  if(Math.abs(x)+rx>43||Math.abs(z)+rz>43)return false;
@@ -254,6 +254,7 @@ function findFreeSpot(minRadius=0,maxRadius=43,avoidX=null,avoidZ=null){
   const a=Math.random()*Math.PI*2,r=minRadius+Math.random()*(maxRadius-minRadius),x=Math.cos(a)*r,z=Math.sin(a)*r;
   if(blocked(x,z))continue;
   if(avoidX!==null&&Math.hypot(x-avoidX,z-avoidZ)<7)continue;
+  if(enemies.some(e=>e.alive&&Math.hypot(x-e.parts.root.position.x,z-e.parts.root.position.z)<4))continue;
   return {x,z}
  }
  for(let r=0;r<44;r+=2)for(let a=0;a<Math.PI*2;a+=Math.PI/8){const x=Math.cos(a)*r,z=Math.sin(a)*r;if(!blocked(x,z))return {x,z}}
