@@ -13,6 +13,7 @@
 #onlineStatus{font-size:12px;color:#b6d7e6;text-align:left;min-height:18px;margin-top:8px}
 @media(pointer:coarse){#mobile{display:block}#hint{bottom:4px;font-size:9px}#topcenter{top:6px}#stats{top:42px;width:145px;font-size:11px}#rightstats{top:6px;font-size:11px}}@media(min-width:700px){#stats{top:56px}}
 .soundToggle{position:fixed;right:12px;top:100px;z-index:15;pointer-events:auto;border:1px solid #8defff88;border-radius:10px;background:#081626eF;color:#fff;padding:8px 11px;font-weight:800;font-size:12px;box-shadow:0 3px 12px #0008}.soundToggle:active{transform:scale(.97)}
+.fullscreenToggle{position:fixed;right:12px;top:196px;z-index:15;pointer-events:auto;border:1px solid #8defff88;border-radius:10px;background:#081626eF;color:#fff;padding:8px 11px;font-weight:800;font-size:12px;box-shadow:0 3px 12px #0008}.fullscreenToggle:active{transform:scale(.97)}
 .rulesToggle{display:none;position:fixed;right:12px;top:148px;z-index:15;pointer-events:auto;border:1px solid #8defff88;border-radius:10px;background:#081626eF;color:#fff;padding:8px 11px;font-weight:800;font-size:12px;box-shadow:0 3px 12px #0008}
 #rulesModal{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:12px;background:#020813e8}
 #rulesModal.open{display:flex}
@@ -25,7 +26,7 @@
 .rulesCard th,.rulesCard td{border:1px solid #36566c;padding:7px;text-align:left;vertical-align:top}
 .rulesCard th{background:#143149;color:#9defff}
 .rulesClose{position:sticky;bottom:0;background:#0b1a2b;padding-top:8px}
-@media(max-width:420px){.soundToggle{top:104px;right:8px;padding:7px 9px;font-size:11px}.rulesToggle{top:146px;right:8px;padding:7px 9px;font-size:11px}.rulesCard{padding:14px}.rulesCard h2{font-size:21px}}
+@media(max-width:420px){.soundToggle{top:104px;right:8px;padding:7px 9px;font-size:11px}.fullscreenToggle{top:194px;right:8px;padding:7px 9px;font-size:11px}.rulesToggle{top:146px;right:8px;padding:7px 9px;font-size:11px}.rulesCard{padding:14px}.rulesCard h2{font-size:21px}}
 #onlinePanel input,#onlinePanel .row,#onlinePanel .small{display:none}#onlineMode:disabled{opacity:.7;cursor:default}
 </style>
 </head>
@@ -42,6 +43,7 @@
  <div id="rightstats" class="panel">💎 <b id="gems">0</b> / 10<br><span id="zone">アリーナに備えろ</span><br>👥 <b id="players">1</b><br>敵残り <b id="remainingEnemies">--</b></div>
  <div id="message"></div>
  <button id="soundToggle" class="soundToggle" type="button" aria-pressed="true">🔊 音 ON</button>
+ <button id="fullscreenToggle" class="fullscreenToggle" type="button" aria-pressed="false">⛶ フル画面</button>
  <button id="rulesHud" class="rulesToggle" type="button">📘 ルール・仕様</button>
  <div id="hint">WASD移動 · マウスで狙う · クリック通常攻撃 · E固有スキル · Q必殺技</div>
 </div>
@@ -209,6 +211,9 @@ function nearestEnemy(maxRange=40){let best=null,dist=maxRange;for(const e of en
 let audioCtx=null,soundEnabled=true;function initAudio(){try{if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume()}catch(e){}}
 function tone(freq,duration,type='sine',volume=.035,endFreq=null){if(!soundEnabled)return;initAudio();if(!audioCtx)return;try{const o=audioCtx.createOscillator(),g=audioCtx.createGain(),now=audioCtx.currentTime;o.type=type;o.frequency.setValueAtTime(freq,now);if(endFreq)o.frequency.exponentialRampToValueAtTime(Math.max(1,endFreq),now+duration);g.gain.setValueAtTime(volume,now);g.gain.exponentialRampToValueAtTime(.001,now+duration);o.connect(g);g.connect(audioCtx.destination);o.start(now);o.stop(now+duration)}catch(e){}}
 function playSfx(kind){if(!soundEnabled)return;const sounds={tap:[[720,.045,'sine',.025,960]],start:[[330,.09,'triangle',.035,440],[440,.09,'triangle',.035,587],[587,.18,'triangle',.04,784]],shoot:[[520,.055,'square',.018,260]],enemy:[[260,.12,'sawtooth',.022,180]],hit:[[150,.13,'triangle',.045,70]],skill:[[440,.08,'sine',.03,660],[660,.1,'sine',.025,880]],super:[[220,.12,'sawtooth',.035,440],[440,.18,'sine',.04,880]],gem:[[660,.07,'sine',.025,990]],win:[[523,.13,'triangle',.045,659],[659,.13,'triangle',.045,784],[784,.16,'triangle',.05,1047],[1047,.28,'sine',.045,1318]],lose:[[440,.14,'triangle',.04,330],[330,.18,'triangle',.04,220],[220,.3,'sawtooth',.025,110]]};(sounds[kind]||[]).forEach((a,i)=>setTimeout(()=>tone(...a),i*90))}
+function syncFullscreenButton(){const on=!!document.fullscreenElement;$('fullscreenToggle').textContent=on?'⤢ 通常画面':'⛶ フル画面';$('fullscreenToggle').setAttribute('aria-pressed',String(on))}
+$('fullscreenToggle').addEventListener('click',async()=>{try{if(document.fullscreenElement){await document.exitFullscreen()}else{const target=document.documentElement;if(!target.requestFullscreen){$('fullscreenToggle').textContent='このブラウザは非対応';return}await target.requestFullscreen()}syncFullscreenButton()}catch(e){$('fullscreenToggle').textContent='フル画面にできません';setTimeout(syncFullscreenButton,1800)}});
+document.addEventListener('fullscreenchange',syncFullscreenButton);
 $('soundToggle').onclick=()=>{soundEnabled=!soundEnabled;$('soundToggle').textContent=soundEnabled?'🔊 音 ON':'🔇 音 OFF';$('soundToggle').setAttribute('aria-pressed',String(soundEnabled));if(soundEnabled){initAudio();tone(660,.08,'sine',.025,880)}};
 function projectileBlocked(a,b){const delta=b.clone().sub(a),steps=Math.max(1,Math.ceil(delta.length()/.22));for(let i=1;i<=steps;i++){const p=a.clone().addScaledVector(delta,i/steps);for(const o of obstacles){if(Math.abs(p.x-o.x)<o.rx+.18&&Math.abs(p.z-o.z)<o.rz+.18)return true}}return false}
 function spawnProjectile(from,to,damage,owner='player',color=0x7beaff){const enemy=owner==='enemy';const m=new THREE.Mesh(new THREE.SphereGeometry(enemy ? 0.25 : 0.16,12,10),new THREE.MeshBasicMaterial({color,transparent:enemy,opacity:enemy ? 0.98 : 1}));m.position.copy(from);scene.add(m);let glow=null;if(enemy){glow=new THREE.Mesh(new THREE.SphereGeometry(.43,10,8),new THREE.MeshBasicMaterial({color:0xff362d,transparent:true,opacity:.22,depthWrite:false}));glow.position.copy(from);scene.add(glow)}projectiles.push({mesh:m,glow,from:from.clone(),to:to.clone(),damage,owner,speed:enemy?13:28,life:2.5,homing:enemy&&DIFFICULTIES[difficulty].homing})}
