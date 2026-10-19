@@ -1,19 +1,21 @@
-Aev Battle — Proprietary License / All Rights Reserved
-Copyright (c) 2026 Aev0rnJP Project
+Aev Battle 利用条件（All Rights Reserved）
+Copyright © 2026 Aev0rnJP Project
 
-1. Scope
-This notice applies to the original Aev Battle source code, text, presentation, and character settings in this repository, except for third-party components and materials identified as belonging to their respective owners.
+【日本語版を優先します。英語版：LICENSE.en.md】
 
-2. No general permission
-No license is granted to copy, modify, redistribute, republish, sublicense, or commercially exploit the original project materials without prior written permission from the applicable rights holder. Viewing and playing the publicly hosted game does not transfer ownership or grant rights to reuse its original materials.
+第1条（対象）
+本条件は、リポジトリ内の Aev Battle のオリジナルコード、文章、画面表現、キャラクター設定などに適用されます。ただし、第三者が権利を有するソフトウェアや素材は対象外であり、それぞれのライセンスが適用されます。
 
-3. Third-party components
-Third-party software and materials are not relicensed by this notice. In particular, Three.js 0.160.0 is distributed under the MIT License; its applicable license and copyright notices govern that component. Other third-party assets, services, and trademarks remain subject to their respective terms.
+第2条（許諾）
+本作のオリジナル部分について、権利者の事前の許可なく、複製、改変、再配布、再公開、サブライセンス、または商用利用する権利は許諾されません。公開されたゲームを閲覧・プレイすることによって、著作権その他の権利が譲渡されることはありません。
 
-4. Ownership and trademarks
-All rights in the original project materials are reserved by the applicable rights holder. Third-party names and trademarks belong to their respective owners. Aev Battle is not an official Fortnite or Epic Games product.
+第3条（第三者ソフトウェア）
+第三者のソフトウェアや素材は、本条件によって再ライセンスされません。本作が使用する Three.js 0.160.0 には MIT License が適用されます。その他の第三者素材、サービス、商標には各権利者のライセンスや利用条件が適用されます。
 
-5. Disclaimer
-The project is provided “as is”, without warranties to the extent permitted by applicable law. This notice does not exclude or limit any right or liability that cannot legally be excluded or limited.
+第4条（権利と商標）
+オリジナル部分の権利は、該当する権利者に留保されます。第三者の名称・商標は各権利者に帰属します。本作は Fortnite または Epic Games の公式製品ではありません。
 
-This file is a project usage notice and is not a substitute for legal advice. If you believe you own rights in material included in the project, or need permission to reuse material, contact the project maintainer through the repository's issue page.
+第5条（免責）
+本作は現状有姿で提供され、適用法令で認められる範囲で、動作や利用可能性について保証しません。本条件は、法令上排除できない権利や責任を排除・制限するものではありません。
+
+本ファイルはプロジェクトの利用条件を示すものであり、法律上の助言ではありません。収録素材の権利者である場合や、利用許諾を希望する場合は、リポジトリの Issue ページから管理者に連絡してください。

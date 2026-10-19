@@ -1,39 +1,42 @@
 # Aev Battle
 
-**GAME VERSION:** v1.0.3  
-**Project label:** Aev0rnJP Project  
-**Play:** https://mylifereading6666-oss.github.io/Aev-Battle/
+**日本語を優先して掲載しています。** English: [README.en.md](./README.en.md)
 
-Aev Battle is a browser-based 3D arena battle game. The currently available mode is offline BOT battle; online multiplayer, cloud saves, and persistent match progress are not implemented.
+- **ゲームバージョン：** v1.0.3
+- **プロジェクト表記：** Aev0rnJP Project
+- **ゲームをプレイ：** https://mylifereading6666-oss.github.io/Aev-Battle/
 
-## How to play
+Aev Battle は、ブラウザーで遊べる3Dアリーナバトルゲームです。現在利用できるのはオフラインのBOTバトルです。オンライン対戦、クラウドセーブ、戦績の永続保存には対応していません。
 
-- Choose a character and BOT difficulty, then select **戦闘開始**.
-- **PC:** Move with W/A/S/D or arrow keys; Shift to sprint; mouse to look; left-click or Space to attack; E for Skill; Q for Super.
-- **Phone/tablet:** Use the lower-left virtual stick to move, drag the right side to look, and use the attack, SKILL, and SUPER buttons.
-- Defeat every BOT before the three-minute timer ends. If health reaches zero or time runs out, the match ends in defeat.
-- On Hard and above, enemy projectiles home in on the player. On Impossible, enemy projectiles deal one-hit defeat damage and home faster. Projectiles disappear when they hit obstacles.
-- Gems restore health and add to the Super gauge.
+## 遊び方
 
-Controls and gameplay values may change between versions. The in-game **ルール・仕様・クレジット** panel is the current gameplay reference.
+1. キャラクターとBOT難易度を選び、「戦闘開始」を選択します。
+2. **PC：** W/A/S/D または矢印キーで移動、Shiftでダッシュ、マウスで視点操作、左クリックまたはSpaceで攻撃、EでSkill、QでSuper。
+3. **スマートフォン・タブレット：** 左下のスティックで移動し、画面右側をドラッグして視点を操作します。攻撃・SKILL・SUPERボタンを使用します。
+4. 制限時間3分以内に敵BOTを全員倒すと勝利です。体力が0になるか、時間切れになると敗北です。
+5. ハード以上では敵弾がプレイヤーを追尾します。勝利不可では敵弾のダメージが一撃敗北相当になり、追尾性能も強化されています。弾は障害物に当たると消えます。
+6. ジェムを拾うと体力が回復し、必殺技ゲージが増加します。
 
-## Copyright and license
+操作方法やゲーム仕様はバージョンによって変更される場合があります。最新のゲーム内ルール欄も確認してください。
 
-Copyright © 2026 Aev0rnJP Project. All rights reserved, except for third-party components and materials identified as belonging to their respective owners.
+## 著作権・ライセンス
 
-The original Aev Battle code, text, presentation, and character settings are **not released under an open-source license**. Reuse, redistribution, modification, republication, or commercial use of those original parts is not permitted without prior permission from the rights holder. See [LICENSE](./LICENSE).
+Copyright © 2026 Aev0rnJP Project. All rights reserved（第三者のソフトウェア・素材を除く）。
 
-This project uses [Three.js](https://github.com/mrdoob/three.js), version 0.160.0, which is distributed under the MIT License. Third-party software, assets, trademarks, and services remain subject to their own licenses and terms. Listing a third-party project does not imply endorsement.
+本作のオリジナルコード、文章、画面表現、キャラクター設定などは、オープンソースとして公開していません。権利者の事前許可なく、これらのオリジナル部分を複製、改変、再配布、再公開、または商用利用することは許諾されていません。詳細は日本語版の [LICENSE](./LICENSE) を確認してください。
 
-This is an independent project and is not an official Fortnite or Epic Games product. Third-party trademarks belong to their respective owners.
+本作は Three.js 0.160.0 を利用しています。Three.js は MIT License で提供され、本作のオリジナル部分とは別のライセンスが適用されます。第三者のソフトウェア、素材、商標、サービスには、それぞれの権利者が定めるライセンス・利用条件が適用されます。
 
-## Credits
+本作は Fortnite または Epic Games の公式製品ではありません。第三者の商標は各権利者に帰属します。
 
-- Project: Aev Battle / Aev0rnJP Project
-- Development and publishing repository: [Aev-Battle on GitHub](https://github.com/mylifereading6666-oss/Aev-Battle)
-- Some development and explanatory text was prepared with AI assistance (ChatGPT).
-- Bug reports: [GitHub Issues](https://github.com/mylifereading6666-oss/Aev-Battle/issues)
+## クレジット
 
-## Disclaimer
+- 作品名：Aev Battle
+- プロジェクト表記：Aev0rnJP Project
+- リポジトリ： [GitHub - Aev-Battle](https://github.com/mylifereading6666-oss/Aev-Battle)
+- 開発・説明文の一部に AI（ChatGPT）を利用しています。
+- 不具合報告： [GitHub Issues](https://github.com/mylifereading6666-oss/Aev-Battle/issues)
 
-The project is provided “as is” and without guarantees of uninterrupted availability, error-free operation, or data persistence, to the extent permitted by applicable law. Nothing in this notice limits rights that cannot legally be excluded.
+## 免責事項
+
+本作は現状有姿で提供され、継続的な公開、エラーのない動作、データ保存などを保証しません。ただし、適用法令上、免責できない権利や責任を制限するものではありません。ライセンスの適用や権利関係について法的な判断が必要な場合は、専門家に相談してください。
