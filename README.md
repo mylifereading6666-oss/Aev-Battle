@@ -1,99 +1,39 @@
 # Aev Battle
 
-スマートフォン・タブレット・PCのブラウザで遊べる3Dアリーナバトル。キャラクターを選び、BOTを倒してジェムを集めよう。
+**GAME VERSION:** v1.0.3  
+**Project label:** Aev0rnJP Project  
+**Play:** https://mylifereading6666-oss.github.io/Aev-Battle/
 
-- **ゲーム：** https://mylifereading6666-oss.github.io/Aev-Battle/
-- **ソースコード：** https://github.com/mylifereading6666-oss/Aev-Battle
-- **不具合報告：** https://github.com/mylifereading6666-oss/Aev-Battle/issues
+Aev Battle is a browser-based 3D arena battle game. The currently available mode is offline BOT battle; online multiplayer, cloud saves, and persistent match progress are not implemented.
 
-## はじめ方
+## How to play
 
-1. ゲームページを開き、AEV・VOLT・MEDIC・NOVAからキャラクターを選ぶ。
-2. **BOTバトル**と難易度を選び、「戦闘開始」を押す。
-3. 移動・攻撃・Skill・Superを使い、勝利条件を目指す。
+- Choose a character and BOT difficulty, then select **戦闘開始**.
+- **PC:** Move with W/A/S/D or arrow keys; Shift to sprint; mouse to look; left-click or Space to attack; E for Skill; Q for Super.
+- **Phone/tablet:** Use the lower-left virtual stick to move, drag the right side to look, and use the attack, SKILL, and SUPER buttons.
+- Defeat every BOT before the three-minute timer ends. If health reaches zero or time runs out, the match ends in defeat.
+- On Hard and above, enemy projectiles home in on the player. On Impossible, enemy projectiles deal one-hit defeat damage and home faster. Projectiles disappear when they hit obstacles.
+- Gems restore health and add to the Super gauge.
 
-現在遊べるのはBOTバトルのみ。オンライン対戦は未対応。
+Controls and gameplay values may change between versions. The in-game **ルール・仕様・クレジット** panel is the current gameplay reference.
 
-## 操作方法
+## Copyright and license
 
-| 操作 | PC | スマートフォン・タブレット |
-| --- | --- | --- |
-| 移動 | W/A/S/D・矢印キー | 左下スティック |
-| ダッシュ | Shift＋移動 | キャラクター操作に従う |
-| 視点変更 | マウス | 画面右側をドラッグ |
-| 通常攻撃 | 左クリック / Space | 攻撃ボタン |
-| Skill | E | SKILLボタン |
-| Super | Q | SUPERボタン |
+Copyright © 2026 Aev0rnJP Project. All rights reserved, except for third-party components and materials identified as belonging to their respective owners.
 
-効果音は画面の「音 ON / 音 OFF」で切り替えられます。
+The original Aev Battle code, text, presentation, and character settings are **not released under an open-source license**. Reuse, redistribution, modification, republication, or commercial use of those original parts is not permitted without prior permission from the rights holder. See [LICENSE](./LICENSE).
 
-## ルール
+This project uses [Three.js](https://github.com/mrdoob/three.js), version 0.160.0, which is distributed under the MIT License. Third-party software, assets, trademarks, and services remain subject to their own licenses and terms. Listing a third-party project does not imply endorsement.
 
-- **勝利：** 試合開始時に出現した敵BOTを全員倒す。
-- **制限時間：** 3分。時間切れになると、撃破数にかかわらず敗北。
-- **敗北：** 体力が0になる、または3分以内に敵を全員倒せない。
-- **アリーナ：** 四方を壁で囲った四角いフィールドです。壁の外へは出られません。
-- **安全エリア／ストーム：** 初期半径44から18秒ごとに半径5ずつ縮小し、最小半径9になります。安全エリア外では0.5秒ごとに4ダメージを受けます。
-- **シールド：** ダメージはシールドから先に減ります。
-- **シールド：** ダメージはシールドから先に減ります。
+This is an independent project and is not an official Fortnite or Epic Games product. Third-party trademarks belong to their respective owners.
 
-## BOT難易度
+## Credits
 
-難易度によって**敵BOTの出現数と攻撃**が変わります。プレイヤーの体力・攻撃力・移動速度・スキル・必殺技は変化しません。難易度は戦闘開始前に選びます。
+- Project: Aev Battle / Aev0rnJP Project
+- Development and publishing repository: [Aev-Battle on GitHub](https://github.com/mylifereading6666-oss/Aev-Battle)
+- Some development and explanatory text was prepared with AI assistance (ChatGPT).
+- Bug reports: [GitHub Issues](https://github.com/mylifereading6666-oss/Aev-Battle/issues)
 
-| 難易度 | 敵BOTの数 | BOT弾のダメージ | 追尾 |
-| --- | ---: | ---: | --- |
-| イージー | 4〜7体 | 3〜5 | なし |
-| ノーマル | 7〜11体 | 7〜10 | なし |
-| ハード | 11〜16体 | 12〜16 | あり |
-| アポカリプス | 16〜22体 | 22〜28 | あり |
-| 勝利不可 | 22〜30体 | 1000（一撃） | あり |
+## Disclaimer
 
-ハード以上の敵弾は飛行中もプレイヤーを追尾します。勝利不可ではシールドが残っていても、弾が当たると一撃で敗北します。
-
-## キャラクター・能力
-
-基本能力の順番は **体力 / 移動速度 / 攻撃力 / 射程**。数値や挙動は更新で変更される場合があります。
-
-| キャラクター | 基本能力 | Skill（固有スキル） | Super（必殺技） |
-| --- | --- | --- | --- |
-| **AEV** | 100 / 7 / 22 / 28 | エナジーダッシュ：前方へ約5移動し、体力を最大5回復。再使用7秒。 | エナジーバースト：半径16の敵に75ダメージ。 |
-| **VOLT** | 85 / 9 / 18 / 24 | ライトニング：近くの敵に45ダメージ。敵がいなければ前方へ約3移動。移動速度25%上昇（1.2秒）。再使用6秒。 | サンダーストーム：半径11の敵に65ダメージ。 |
-| **MEDIC** | 115 / 6 / 17 / 25 | リカバー：体力最大32、シールド最大8回復。再使用9秒。 | ヒーリングフィールド：体力最大55、シールド最大35回復。 |
-| **NOVA** | 90 / 6.5 / 20 / 30 | プラズマボム：射程25以内の最寄りの敵を中心に、半径5の敵へ45ダメージ。再使用8秒。 | ノヴァインパクト：半径20の敵に95ダメージ。 |
-
-- **通常攻撃：** オートエイムで画面内・射程内の最も近い敵を狙います。発射後の弾は追尾せず、直線に飛びます。
-- **攻撃クールダウン：** 0.65秒。攻撃ボタンを押すごとに1発発射します。
-- **弾数：** 最大3発。弾は1.25秒ごとに1発ずつ補充されます。HUDとスマートフォンの攻撃ボタンに残弾数・待ち時間が表示されます。
-- 必殺ゲージ：通常攻撃1回で8%、敵撃破で12%、ジェム取得で5%増加。100%でSuperを使用し、使用後0%に戻ります。
-- BOTはプレイヤーに接近し、赤い弾を発射します。
-- Superはゲージ100%で使用できます。
-
-## オフライン起動
-
-初回はインターネット接続中にゲームページを開き、必要ファイルの読み込みとキャッシュを済ませてください。その後、同じ端末・同じブラウザで通信を切り、ゲームURLを開くと起動できる場合があります。
-
-**注意：** キャッシュ状態やブラウザによってはオフライン起動できません。通信を切る前に、使用する端末で動作を確認してください。別端末・別ブラウザにはキャッシュは引き継がれません。オフラインで遊べるのはBOTバトルのみです。
-
-## 保存・オンライン機能
-
-- オンライン対戦、ルーム作成、他プレイヤーとの対戦：**未対応**。
-- 戦績・進行状況の保存：**未対応**。
-- フレンドコード情報：同じブラウザ内のメモで、オンラインのフレンド機能ではありません。
-
-## クレジット・著作権・ライセンス
-
-- **作品名：** Aev Battle
-- **プロジェクト表記：** Aev0rnJP Project
-- **リポジトリ管理：** [mylifereading6666-oss](https://github.com/mylifereading6666-oss/Aev-Battle)
-- **公開：** GitHub Pages
-- **制作支援：** 開発・説明文の一部でAI（ChatGPT）を利用。
-- **著作権：** Copyright © 2026 Aev0rnJP Project. All rights reserved.
-
-本作のオリジナルコード、画面構成、文章、キャラクター設定などは、別途明記されたものを除き権利者に権利が留保されています。公開リポジトリであることは、自由な複製・改変・再配布・商用利用の許可を意味しません。本作全体にオープンソースライセンスは設定していません。
-
-3D描画には **Three.js 0.160.0** を使用しています。ライセンスは[Three.js公式リポジトリ](https://github.com/mrdoob/three.js)を確認してください。Fortnite・Epic Gamesなどの公式製品ではなく、公式な承認・提携を示すものではありません。各商標はそれぞれの権利者に帰属します。
-
-## 不具合報告
-
-問題が起きた場合は、端末・ブラウザ・発生手順を添えて[GitHub Issues](https://github.com/mylifereading6666-oss/Aev-Battle/issues)へ報告してください。
+The project is provided “as is” and without guarantees of uninterrupted availability, error-free operation, or data persistence, to the extent permitted by applicable law. Nothing in this notice limits rights that cannot legally be excluded.
