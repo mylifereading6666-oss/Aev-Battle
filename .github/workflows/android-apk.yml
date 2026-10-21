@@ -1,0 +1,82 @@
+name: Android APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Prepare web files and icon assets
+        run: |
+          npm run prepare:web
+          npm run prepare:assets
+
+      - name: Create Android project
+        run: npx cap add android
+
+      - name: Generate Android launcher icons
+        run: npx capacitor-assets generate --android
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Build debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Prepare APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk Aev-Battle.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Aev-Battle-Android-APK
+          path: Aev-Battle.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish latest APK download
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-latest
+          name: Aev Battle Android APK (Latest)
+          body: |
+            最新の Aev Battle Android APK 自動ビルドです。
+
+            通常のブラウザー版は引き続き https://mylifereading6666-oss.github.io/Aev-Battle/ で利用できます。
+            Android ではダウンロード後、端末の案内に従ってインストールしてください。
+          prerelease: true
+          make_latest: false
+          files: Aev-Battle.apk
+          overwrite_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
