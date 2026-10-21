@@ -5,7 +5,7 @@
 - **ゲームバージョン：** v1.0.3
 - **プロジェクト表記：** Aev0rnJP Project
 - **ゲームをプレイ：** https://mylifereading6666-oss.github.io/Aev-Battle/
-- **Android版 APK：** [最新版をダウンロード](https://github.com/mylifereading6666-oss/Aev-Battle/releases/download/android-latest/Aev-Battle.apk)（ビルド完了後に利用可能）
+- **Android版 APK（直接ダウンロード）：** https://github.com/mylifereading6666-oss/Aev-Battle/releases/download/android-latest/Aev-Battle.apk（APKビルド完了後、このURLを開くとダウンロードが始まります）
 
 Aev Battle は、ブラウザーで遊べる3Dアリーナバトルゲームです。現在利用できるのはオフラインのBOTバトルです。オンライン対戦、クラウドセーブ、戦績の永続保存には対応していません。
 
@@ -24,7 +24,7 @@ Aev Battle は、ブラウザーで遊べる3Dアリーナバトルゲームで�
 
 ブラウザー版を残したまま、Androidアプリ版もビルドできるようにしています。アプリ版は同じゲーム画面をAndroidアプリ内で表示する構成で、独立したゲームサーバーは追加しません。
 
-- **APKを直接ダウンロード：** [Aev-Battle.apk](https://github.com/mylifereading6666-oss/Aev-Battle/releases/download/android-latest/Aev-Battle.apk)
+- **APKを直接ダウンロード（URLを開くとダウンロード開始）：** https://github.com/mylifereading6666-oss/Aev-Battle/releases/download/android-latest/Aev-Battle.apk
 - **ビルド状況・履歴：** [GitHub Actions](https://github.com/mylifereading6666-oss/Aev-Battle/actions/workflows/android-apk.yml)
 - **ブラウザー版：** https://mylifereading6666-oss.github.io/Aev-Battle/
 
