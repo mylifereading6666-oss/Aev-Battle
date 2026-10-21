@@ -1,0 +1,9 @@
+{
+  "appId": "jp.aev0rn.battle",
+  "appName": "Aev Battle",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": false
+  }
+}
