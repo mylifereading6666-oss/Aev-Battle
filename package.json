@@ -1,0 +1,20 @@
+{
+  "name": "aev-battle",
+  "version": "1.0.4",
+  "private": true,
+  "description": "Aev Battle web game and Android wrapper",
+  "scripts": {
+    "prepare:web": "node scripts/prepare-web.cjs",
+    "prepare:assets": "node scripts/prepare-assets.cjs",
+    "android:build": "npm run prepare:web && npx cap sync android && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.4.3",
+    "sharp": "^0.34.3"
+  }
+}
